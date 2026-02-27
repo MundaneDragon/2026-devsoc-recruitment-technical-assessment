@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import List, Dict, Union
 from flask import Flask, request, jsonify
 import re
+from collections import deque
 
 # ==== Type Definitions, feel free to add or modify ===========================
 @dataclass
@@ -45,7 +46,7 @@ def parse():
 # [TASK 1] ====================================================================
 # Takes in a recipeName and returns it in a form that 
 def parse_handwriting(recipeName: str) -> Union[str | None]:
-	# TODO: implement
+
 	print(recipeName)
 	temp:str = re.sub(r'[-_]', ' ', recipeName)
 	print(temp)
@@ -68,7 +69,7 @@ def parse_handwriting(recipeName: str) -> Union[str | None]:
 # Endpoint that adds a CookbookEntry to your magical cookbook
 @app.route('/entry', methods=['POST'])
 def create_entry():
-	# TODO: implement me
+
 	data = request.get_json()
 	print(data)
 	food_type = data.get('type', '')
@@ -111,8 +112,50 @@ def create_entry():
 # Endpoint that returns a summary of a recipe that corresponds to a query name
 @app.route('/summary', methods=['GET'])
 def summary():
-	# TODO: implement me
-	return 'not implemented', 500
+
+	food_summary = request.args.get('name', "emtpy")
+	ingredient_summary = {}
+	total_cook_time = 0
+
+	food_queue = deque()
+	food_queue.append(food_summary)
+
+	while food_queue:
+		current_food = food_queue.popleft()
+		if current_food not in cookbook:
+			return f'Invalid recipe name: "{current_food}"', 400
+		
+		if isinstance(cookbook[current_food], Ingredient):
+			return f'Invalid recipe name: "{current_food}" is an ingredient, not a recipe', 400
+
+		entry = cookbook[current_food]
+		if isinstance(entry, Recipe):
+
+			for item in entry.required_items:
+
+				if isinstance(item, Recipe):
+					food_queue.extend([item.name] * item.quantity)
+
+				else:
+					if item.name not in cookbook:
+						return f'Invalid ingredient name: "{item.name}"', 400
+					
+					current_ingredient = cookbook[item.name]
+
+					if current_food in ingredient_summary:
+						ingredient_summary[current_food] += item.quantity
+					else:
+						ingredient_summary[current_food] = item.quantity
+
+					total_cook_time += current_ingredient.cook_time * item.quantity
+	result = {
+		"name": food_summary,
+  		"cookTime": total_cook_time,
+  		"ingredients": [{"name": name, "quantity": quantity} for name, quantity in ingredient_summary.items()]
+	}
+
+	print(result)
+	return jsonify(result), 200
 
 
 # =============================================================================
