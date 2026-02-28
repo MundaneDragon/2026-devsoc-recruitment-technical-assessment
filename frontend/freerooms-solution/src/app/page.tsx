@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import ClickableImageDiv from "@/components/ui/image-change";
 
 // Mock data matching the buildings from the design
 const buildings = [
@@ -60,16 +61,7 @@ export default function Home() {
    <div className="max-w-[1600px] flex flex-col">
       <header className="flex items-center justify-between border-b p-4">
 
-        <div className="flex items-center cursor-pointer">
-          <Image 
-            src="/freeRoomsLogo.png" 
-            alt="Freerooms Logo" 
-            className=""
-            width={40}
-            height={40}
-          />
-          <h1 className="hidden sm:inline text-4xl font-bold text-orange-500 tracking-[1px]">Freerooms</h1>
-        </div>
+        <ClickableImageDiv initialImage="/freeRoomsLogo.png" nextImage="/freeroomsDoorClosed.png" />
         
         <nav className="flex items-center gap-2">
           <Button variant="ghost" size="icon" className=" border border-orange-200">
