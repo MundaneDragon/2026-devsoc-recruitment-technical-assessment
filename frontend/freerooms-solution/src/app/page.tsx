@@ -6,52 +6,52 @@ const buildings = [
   {
       "name": "AGSM", 
       "rooms_available": 9,
-      "building_picture": "agsm.webp"
+      "building_picture": "/agsm.webp"
     },
     {
       "name": "Ainsworth Building",
       "rooms_available": 16,
-      "building_picture": "ainsworth.webp"
+      "building_picture": "/ainsworth.webp"
     },
     {
       "name": "Anita B Lawrence Centre",
       "rooms_available": 44,
-      "building_picture": "anitab.webp"
+      "building_picture": "/anitab.webp"
     },
     {
       "name": "Biological Sciences",
       "rooms_available": 6,
-      "building_picture": "biologicalScience.webp"
+      "building_picture": "/biologicalScience.webp"
     },
     {
       "name": "Biological Science (West)",
       "rooms_available": 8,
-      "building_picture": "biologicalScienceWest.webp"
+      "building_picture": "/biologicalScienceWest.webp"
     },
     {
       "name": "Blockhouse",
       "rooms_available": 42,
-      "building_picture": "blockhouse.webp"
+      "building_picture": "/blockhouse.webp"
     },
     {
       "name": "Business School",
       "rooms_available": 18,
-      "building_picture": "businessSchool.webp"
+      "building_picture": "/businessSchool.webp"
     },
     {
       "name": "Civil Engineering Building",
       "rooms_available": 8,
-      "building_picture": "civilBuilding.webp"
+      "building_picture": "/civilBuilding.webp"
     },
     {
       "name": "Colombo Building",
       "rooms_available": 5,
-      "building_picture": "colombo.webp"
+      "building_picture": "/colombo.webp"
     },
     {
       "name": "Computer Science & Eng (K17)",
       "rooms_available": 7,
-      "building_picture": "cseBuilding.webp"
+      "building_picture": "/cseBuilding.webp"
     }
 ];
 
@@ -104,6 +104,12 @@ export default function Home() {
           </Button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 ">
+          {buildings.map((building) => (
+            <div key={building.name} 
+            className="border rounded-lg overflow-hidden cursor-pointer  h-15 xs:h-19 sm:h-40 md:h-50 lg:h-65">
+              <img src={building.building_picture} alt={building.name} className="w-full h-full object-cover"/>
+            </div>
+          ))}
         </div>
       </main>
     </div>
