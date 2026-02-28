@@ -68,7 +68,7 @@ export default function Home() {
             width={40}
             height={40}
           />
-          <h1 className="hidden md:inline text-4xl font-bold text-orange-500 tracking-[1px]">Freerooms</h1>
+          <h1 className="hidden sm:inline text-4xl font-bold text-orange-500 tracking-[1px]">Freerooms</h1>
         </div>
         
         <nav className="flex items-center gap-2">
@@ -89,8 +89,19 @@ export default function Home() {
       </header>
 
       <main className="p-4">
-        <div className="flex items-center justify-between mb-4">
-
+        <div className="flex flex-wrap items-center justify-between mb-4">
+          <Button variant="ghost" size="lg" className="order-2 border-3 border-orange-500 cursor-pointer">
+            <img src="filter_alt.svg" alt="filter alt button" />
+            <h1 className="text-md font-bold text-orange-500 ">Filter</h1>
+          </Button>
+          <div className="h-10 w-80 w-full order-1 sm:w-80 sm:order-3 md:w-120 lg:w-160 border-1 border-gray-300 rounded-sm flex items-center gap-2 px-4 mb-2 cursor-text">
+            <img src="search-bar-icon.svg" alt="search bar icon" />
+            <h1 className="text-md font-medium text-gray-400 ">Searching for a building...</h1>
+          </div>
+          <Button variant="ghost" size="lg" className=" order-4 border-3 border-orange-500 cursor-pointer">
+            <img src="filter_list.svg" alt="filter list button" />
+            <h1 className="text-md font-bold text-orange-500 ">Sort</h1>
+          </Button>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 ">
         </div>
