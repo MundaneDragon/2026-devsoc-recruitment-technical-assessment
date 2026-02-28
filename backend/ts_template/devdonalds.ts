@@ -144,8 +144,54 @@ app.post("/entry", (req: Request, res: Response) => {
 // [TASK 3] ====================================================================
 // Endpoint that returns a summary of a recipe that corresponds to a query name
 app.get("/summary", (req: Request, res: Request) => {
-  // TODO: implement me
-  res.status(500).send("not yet implemented!")
+  const foodSummaryName = (req.query.name as string);
+  const ingredientSummary: Map<string, number> = new Map();
+  let totalCookTime = 0;
+
+  // Using a standard array as a queue
+  const foodQueue: string[] = [foodSummaryName];
+
+  while (foodQueue.length > 0) {
+      const currentFoodName:string = foodQueue.shift()!; // popleft equivalent
+
+      if (!cookbook.has(currentFoodName)) {
+          return res.status(400).send(`Invalid recipe name: "${currentFoodName}"`);
+      }
+
+      const entry = cookbook.get(currentFoodName)! as recipe;
+
+      if (entry.type === "ingredient") {
+          return res.status(400).send(`Invalid recipe name: "${currentFoodName}" is an ingredient, not a recipe`);
+      }
+
+      // Assuming Quantity is always non-negative integer
+      for (const item of entry.requiredItems) {
+        let isRecipe = cookbook.get(item.name)?.type === "recipe";
+          if (isRecipe) {
+              for (let i = 0; i < item.quantity; i++) {
+                  foodQueue.push(item.name);
+              }
+          } else {
+              if (!cookbook.has(item.name)) {
+                  return res.status(400).send(`Invalid ingredient name: "${item.name}"`);
+              }
+
+              const currentIngredient = cookbook.get(item.name)! as ingredient;
+
+              ingredientSummary.set(item.name, (ingredientSummary.get(item.name) || 0) + item.quantity);
+              totalCookTime += currentIngredient.cookTime * item.quantity;
+          }
+      }
+  }
+
+  const result = {
+      name: foodSummaryName,
+      cookTime: totalCookTime,
+      ingredients: Object.fromEntries(ingredientSummary)
+  };
+
+  console.log(result);
+  return res.status(200).json(result);
 
 });
 
