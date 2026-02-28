@@ -1,0 +1,7 @@
+The solution for the frontend is in `./freerooms-solution`
+1. Make sure to cd inside that folder
+2. Install all dependencies i.e. npm install inside the `./freerooms-solution` folder
+3. Then run `npm run dev`
+4. Open `http://localhost:3000/` in your browser to access the local deployment
+
+Finished Implementing all the required features, and did my best to recreate the website.
