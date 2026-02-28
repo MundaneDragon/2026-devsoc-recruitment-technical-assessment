@@ -103,11 +103,22 @@ export default function Home() {
             <h1 className="text-md font-bold text-orange-500 ">Sort</h1>
           </Button>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 ">
           {buildings.map((building) => (
-            <div key={building.name} 
-            className="border rounded-lg overflow-hidden cursor-pointer  h-15 xs:h-19 sm:h-40 md:h-50 lg:h-65">
-              <img src={building.building_picture} alt={building.name} className="w-full h-full object-cover"/>
+            <div 
+              key={building.name} 
+              className="relative border rounded-lg overflow-hidden cursor-pointer h-15 xs:h-19 sm:h-40 md:h-50 lg:h-65"
+            >
+              <img src={building.building_picture} alt={building.name} className="w-full h-full object-cover brightness-50 sm:brightness-100"/>
+              <div className="absolute  bottom-1/2 translate-y-1/2 sm:translate-y-0 sm:bottom-0 left-1/2 transform -translate-x-1/2 w-[90%] h-[20%] sm:rounded-md sm:bg-orange-500 flex items-center sm:px-2 sm:mb-2">
+                <h2 className="top-0 left-0 text-sm font-bold sm:font-medium text-white">{building.name}</h2>
+              </div>
+              <div className="absolute flex items-center top-1/2 transform -translate-y-1/2 sm:translate-y-0 sm:top-0 right-0 bg-white rounded-xl p-2 sm:mt-2 mr-2">
+                <div className="bg-green-500 h-2 w-2 rounded-full mr-2"></div>
+                <p className=" text-xs font-medium mr-1">{building.rooms_available}</p>
+                <p className=" sm:hidden text-xs font-medium mr-1">/ {building.rooms_available}</p>
+                <p className=" hidden sm:inline text-xs font-medium"> rooms available</p>
+              </div>
             </div>
           ))}
         </div>
